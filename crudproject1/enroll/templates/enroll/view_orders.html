@@ -1,0 +1,53 @@
+{% extends 'enroll/base.html' %}
+{% block content %}
+
+<div class="col-sm-12">
+
+    {% if orders %}
+    <h4 class="text-center alert alert-info">Orders</h4>
+    <div class="input-group rounded">
+
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th>Sr.no</th>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Supplier</th>
+                    <th>Brand</th>
+                    <th>GST Type</th>
+                    <th>Return Policy</th>
+                    <th>Actions</th>
+                </tr>
+                
+                {% for each_order in orders %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{each_order.id}}</td>
+                    <td>{{each_order.order_products.name}}</td>
+                    <td>{{each_order.order_products.supplier}}</td>
+                    <td>{{each_order.order_products.brand}}</td>
+                    <td>{{each_order.order_products.gst_type}}</td>
+                    <td>{{each_order.order_products.return_policy}}</td>
+                    <td>
+                        {% comment %} <a href="{% url 'update_order' each_order.id %}" class="btn btn-warning">Edit</a>
+                        
+                         {% endcomment %}
+                        <form action="{% url 'delete_order_item' each_order.id %}" class="d-inline" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-warning">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </th>
+            </tbody>
+            
+        </table>
+        {% else %}
+        <h4 class="text-center alert alert-info">No Orders</h4>
+
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

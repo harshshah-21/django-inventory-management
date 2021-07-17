@@ -88,8 +88,10 @@ urlpatterns = [
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='enroll/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="enroll/password_reset_confirm.html"), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='enroll/password_reset_complete.html'), name='password_reset_complete'),      
-
-
+    
+    path("view_order_items", views.view_order_items, name="view_order_items"),
+    path("add_order_item", views.add_order_item, name="add_order_item"),
+    path("delete_order_item/<int:id>", views.delete_order_item, name="delete_order_item")
 ]
 
 if settings.DEBUG:

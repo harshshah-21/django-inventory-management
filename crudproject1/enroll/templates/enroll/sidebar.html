@@ -60,6 +60,23 @@
           </li>
           <li class="sidebar-dropdown">
             <a href="#">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Orders</span>
+              {% comment %} <span class="badge badge-pill badge-danger">2</span> {% endcomment %}
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{% url 'add_order_item' %}">Add Order item</a>
+                </li>
+                <li>
+                  <a href="{% url 'view_order_items' %}">Display Orders</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="sidebar-dropdown">
+            <a href="#">
               <i class="far fa-gem"></i>
               <span>Products Operation</span>
             </a>

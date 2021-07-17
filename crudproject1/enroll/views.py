@@ -67,7 +67,6 @@ def add_show(request):
 def view_products(request):
     validate_login(request)
     products = Products.objects.all()
-    print(products)
     return render(request, "enroll/view_products.html", {"prod": products})
 
 
@@ -464,3 +463,44 @@ def password_reset_request(request):
 					return redirect ("done/")
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="enroll/password_reset.html", context={"password_reset_form":password_reset_form})
+
+
+def add_order_item(request):
+    validate_login(request)
+    if request.method == "POST":
+        p1 = OrderForm(request.POST)
+        if p1.is_valid():
+            p1.save()
+            print(p1)
+            p1 = OrderForm()
+    else:
+        p1 = OrderForm()    
+    orders = Order.objects.all()
+    return render(request, "enroll/add_order.html", {"form": p1, "prod": orders})
+
+
+def view_order_items(request):
+    validate_login(request)
+    orders = Order.objects.all()
+    return render(request, "enroll/view_orders.html", {"orders": orders})
+
+
+def delete_order_item(request, id):
+    validate_login(request)
+    if request.method == "POST":
+        p = Order.objects.get(pk=id)
+        p.delete()
+        return HttpResponseRedirect("/view_order_items")
+
+
+# def update_inventory_item(request, id):
+#     validate_login(request)
+#     if request.method == "POST":
+#         p = Order.objects.get(pk=id)
+#         form_obj = OrderForm(request.POST, instance=p)
+#         if form_obj.is_valid():
+#             form_obj.save()
+#     else:
+#         p = Order.objects.get(pk=id)
+#         form_obj = OrderForm(instance=p)
+#     return render(request, "enroll/update_order.html", {"form": form_obj})

@@ -64,8 +64,8 @@ class Products(models.Model):
     name = models.CharField(max_length=70)
     cover_image = models.ImageField(upload_to='images/')
     
-    price = models.PositiveIntegerField(default=5)
-    weight = models.PositiveIntegerField(default=5)
+    price = models.PositiveIntegerField(default=0)
+    weight = models.PositiveIntegerField(default=0)
 
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="category", default="0"
@@ -89,7 +89,7 @@ class Products(models.Model):
         TaxClass, on_delete=models.CASCADE, related_name="gst_type", default="0"
     )
     return_policy = models.ForeignKey(
-        ReturnPolicy, on_delete=models.CASCADE, related_name="retunr_policy", default="0"
+        ReturnPolicy, on_delete=models.CASCADE, related_name="return_policy", default="0"
     )
     supplier = models.ForeignKey(
         Supplier, on_delete=models.CASCADE, related_name="supplier", default="0"
@@ -107,11 +107,11 @@ class ProductImage(models.Model):
     
 
 class Inventory(models.Model):
-    products = models.ForeignKey(
-        Products, on_delete=models.CASCADE, related_name="products", default="0"
+    inventory_products = models.ForeignKey(
+        Products, on_delete=models.CASCADE, related_name="inventory_products", default="0"
     )
-    no_of_sets = models.PositiveIntegerField(max_length=70)
-    no_of_piece_per_set = models.PositiveIntegerField(max_length=70)
+    no_of_sets = models.PositiveIntegerField()
+    no_of_piece_per_set = models.PositiveIntegerField()
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
@@ -120,3 +120,10 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     phone = PhoneNumberField(null=False, blank=False)
     aadhaar_id = models.CharField(max_length=12) 
+
+class Order(models.Model):
+    order_products = models.ForeignKey(
+        Products, on_delete=models.CASCADE, related_name="order_products", default="0"
+    )
+    no_of_sets = models.PositiveIntegerField()
+    price = models.PositiveIntegerField()
