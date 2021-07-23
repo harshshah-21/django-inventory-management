@@ -11,34 +11,20 @@
             <tbody>
                 <tr>
                     <th>Sr.no</th>
-                    <th>ID</th>
                     <th>Name</th>
-                    <th>no_of_sets</th>
+                    <th>Price</th>
+                    <th>no_of_sets <br />(linked with orders)</th>
                     <th>no_of_piece_per_set</th>
-                    <th>Fabric</th>
-                    <th>Price per product</th>
-                    <th>Brand</th>
-                    <th>Supplier</th>
                     <th>Actions</th>
                 </tr>
                 
                 {% for each_product in prod %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{each_product.id}}</td>
                     <td>{{each_product.inventory_products}}</td>
+                    <td>{{each_product.inventory_products.price}}</td>
                     <td>{{each_product.no_of_sets}}</td>
                     <td>{{each_product.no_of_piece_per_set}}</td>
-                    <td>{{each_product.products}}</td>
-                    <td>{{each_product.products.price}} Rs</td>
-                    <td>{{each_product.products.brand}}</td>
-                    <td>{{each_product.products.supplier}}</td>
-                    {% comment %} <td>{{each_product.quantity}}</td>
-                    <td>{{each_product.price}}</td>
-
-                    <td>{{each_product.fabric}}</td>
-                    <td>{{each_product.brand}}</td>
-                    <td>{{each_product.supplier}}</td> {% endcomment %}
                     <td>
                         <a href="{% url 'update_inventory_item' each_product.id %}" class="btn btn-warning">Edit</a>
                         <form action="{% url 'delete_inventory_item' each_product.id %}" class="d-inline" method="post">

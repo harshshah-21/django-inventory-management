@@ -91,8 +91,7 @@ urlpatterns = [
     
     path("view_order_items", views.view_order_items, name="view_order_items"),
     path("add_order_item", views.add_order_item, name="add_order_item"),
-    path("delete_order_item/<int:id>", views.delete_order_item, name="delete_order_item"),
-    path("update_order_item/<int:id>", views.update_order_item, name="update_order_item")
+    path("delete_order_item/<int:id>", views.delete_order_item, name="delete_order_item")
 ]
 
 if settings.DEBUG:

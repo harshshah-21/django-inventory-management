@@ -1,5 +1,5 @@
 from django.http import request,HttpResponse
-from django.shortcuts import render, HttpResponseRedirect,redirect
+from django.shortcuts import render, HttpResponseRedirect,redirect, get_object_or_404
 from django.core.mail import send_mail, BadHeaderError
 from .forms import *
 from .models import *
@@ -48,16 +48,12 @@ def add_show(request):
     validate_login(request)
     if request.method == "POST":
         images =request.FILES.getlist('images')
-        print(request.FILES)
         p1 = AddProduct(request.POST,request.FILES)
-        print("recieved p1")
-        print(p1.is_valid())
         if p1.is_valid():
             curr_prod=p1.save()
             p1 = AddProduct()
 
             for img in images:
-                print(img)
                 ProductImage.objects.create(product=curr_prod,images=img)
     else:
         p1 = AddProduct()
@@ -332,19 +328,15 @@ def register_request(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         form1 = NewProfileForm(request.POST)
-        print(form.is_valid())
-        print(form1.is_valid())
         if form.is_valid() and form1.is_valid(): 
-            print("hello here")
             user = form.save()
             profile_data = form1.cleaned_data
-            print(profile_data)
             Profile.objects.create(user = user,role = profile_data["role"],bio = profile_data["bio"],aadhaar_id = profile_data["aadhaar_id"],phone = profile_data["phone"],birth_date = profile_data["birth_date"])
             login(request, user)
             messages.success(request, "Registration successful.")
             return HttpResponseRedirect("/")
         else:
-            print("Wait What!")
+            pass
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     form1 = NewProfileForm()
@@ -469,9 +461,11 @@ def add_order_item(request):
     validate_login(request)
     if request.method == "POST":
         p1 = OrderForm(request.POST)
+        associated_product = Inventory.objects.get(inventory_products=request.POST.get("order_products"))
+        associated_product.no_of_sets = (associated_product.no_of_sets - int(request.POST.get("no_of_sets")))
         if p1.is_valid():
             p1.save()
-            print(p1)
+            associated_product.save()
             p1 = OrderForm()
     else:
         p1 = OrderForm()    
@@ -489,18 +483,9 @@ def delete_order_item(request, id):
     validate_login(request)
     if request.method == "POST":
         p = Order.objects.get(pk=id)
+        associated_product = get_object_or_404(Inventory, inventory_products=p.order_products)
+        associated_product.no_of_sets = (associated_product.no_of_sets + p.no_of_sets)
         p.delete()
+        associated_product.save()
         return HttpResponseRedirect("/view_order_items")
 
-
-def update_order_item(request, id):
-    validate_login(request)
-    if request.method == "POST":
-        p = Order.objects.get(pk=id)
-        form_obj = OrderForm(request.POST, instance=p)
-        if form_obj.is_valid():
-            form_obj.save()
-    else:
-        p = Order.objects.get(pk=id)
-        form_obj = OrderForm(instance=p)
-    return render(request, "enroll/update_order.html", {"form": form_obj})

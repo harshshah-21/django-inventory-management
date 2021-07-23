@@ -15,7 +15,7 @@
                     <th>Supplier</th>
                     <th>Brand</th>
                     <th>GST Type</th>
-                    <th>No of sets</th>
+                    <th>No of sets <br />(linked with inventory)</th>
                     <th>Price per set</th>
                     <th>Actions</th>
                 </tr>
@@ -30,7 +30,6 @@
                     <td>{{each_order.no_of_sets}}</td>
                     <td>{{each_order.price}}</td>
                     <td>
-                        <a href="{% url 'update_order_item' each_order.id %}" class="btn btn-warning">Edit</a>
                         <form action="{% url 'delete_order_item' each_order.id %}" class="d-inline" method="post">
                             {% csrf_token %}
                             <input type="submit" value="Delete" class="btn btn-warning">

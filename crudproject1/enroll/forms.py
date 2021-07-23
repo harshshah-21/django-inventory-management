@@ -18,7 +18,6 @@ class SupplierForm(forms.ModelForm):
             "address": forms.Textarea(attrs={"class": "form-control"}),
         }
 
-
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
@@ -26,7 +25,6 @@ class CategoryForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
         }
-
 
 class SubCategoryForm(forms.ModelForm):
     class Meta:
@@ -36,7 +34,6 @@ class SubCategoryForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"class": "form-control"}),
         }
 
-
 class BrandForm(forms.ModelForm):
     class Meta:
         model = Brand
@@ -44,7 +41,6 @@ class BrandForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
         }
-
 
 class FabricForm(forms.ModelForm):
     class Meta:
@@ -54,7 +50,6 @@ class FabricForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"class": "form-control"}),
         }
 
-
 class TaxClassForm(forms.ModelForm):
     class Meta:
         model = TaxClass
@@ -63,7 +58,6 @@ class TaxClassForm(forms.ModelForm):
             "tax_class": forms.TextInput(attrs={"class": "form-control"}),
         }
 
-
 class ReturnPolicyForm(forms.ModelForm):
     class Meta:
         model = ReturnPolicy
@@ -71,7 +65,6 @@ class ReturnPolicyForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
         }
-
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
