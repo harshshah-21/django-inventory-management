@@ -493,14 +493,14 @@ def delete_order_item(request, id):
         return HttpResponseRedirect("/view_order_items")
 
 
-# def update_inventory_item(request, id):
-#     validate_login(request)
-#     if request.method == "POST":
-#         p = Order.objects.get(pk=id)
-#         form_obj = OrderForm(request.POST, instance=p)
-#         if form_obj.is_valid():
-#             form_obj.save()
-#     else:
-#         p = Order.objects.get(pk=id)
-#         form_obj = OrderForm(instance=p)
-#     return render(request, "enroll/update_order.html", {"form": form_obj})
+def update_order_item(request, id):
+    validate_login(request)
+    if request.method == "POST":
+        p = Order.objects.get(pk=id)
+        form_obj = OrderForm(request.POST, instance=p)
+        if form_obj.is_valid():
+            form_obj.save()
+    else:
+        p = Order.objects.get(pk=id)
+        form_obj = OrderForm(instance=p)
+    return render(request, "enroll/update_order.html", {"form": form_obj})
